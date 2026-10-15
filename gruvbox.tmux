@@ -22,9 +22,9 @@ tmux set -g pane-border-status off
 
 tmux set -g status-style "fg=${THEME[foreground]},bg=${THEME[background]}"
 
-window_id_style="$(tmux show-option -gv @gruvbox-tmux_window_id_style 2>/dev/null || echo "digital")"
-pane_id_style="$(tmux show-option -gv @gruvbox-tmux_pane_id_style 2>/dev/null || echo "hsquare")"
-zoom_id_style="$(tmux show-option -gv @gruvbox-tmux_zoom_id_style 2>/dev/null || echo "dsquare")"
+window_id_style="$(tmux show-option -gv @gruvbox-tmux_window_id_style 2>/dev/null || echo "dsquare")"
+pane_id_style="$(tmux show-option -gv @gruvbox-tmux_pane_id_style 2>/dev/null || echo "super")"
+zoom_id_style="$(tmux show-option -gv @gruvbox-tmux_zoom_id_style 2>/dev/null || echo "rsquare")"
 terminal_icon="$(tmux show-option -gv @gruvbox-tmux_terminal_icon 2>/dev/null || echo '')"
 active_terminal_icon="$(tmux show-option -gv @gruvbox-tmux_active_terminal_icon 2>/dev/null || echo '')"
 
@@ -88,7 +88,7 @@ declare -A RIGHT_ITEM_TYPES=(
 	[wb_git]="@gruvbox-tmux_status_wb_git"
 	[battery]="@gruvbox-tmux_status_battery"
 	[datetime]="@gruvbox-tmux_status_datetime"
-	[ssh]="@gruvbox-tmux_status_datetime"
+	[ssh]="@gruvbox-tmux_status_ssh"
 )
 
 DEFAULT_ITEMS="ssh git datetime"

@@ -77,7 +77,7 @@ set -g @gruvbox-tmux_show_datetime 0
 Time options
 
 ```bash
-set -g @gruvbox-tmux_time_format 12H
+set -g @gruvbox-tmux_time_format 24H
 ```
 ##### Available Options
 - `24H`: 18:30

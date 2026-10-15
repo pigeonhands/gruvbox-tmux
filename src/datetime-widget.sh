@@ -18,14 +18,14 @@ time_format=$(tmux show-option -gv @gruvbox-tmux_time_format 2>/dev/null)
 time_string=""
 
 case "$time_format" in
-"12H")
-	time_string="%I:%M %p "
+"24H")
+	time_string="%H:%M "
 	;;
 "hide")
 	time_string=""
 	;;
 *)
-	time_string="%H:%M "
+	time_string="%I:%M %p "
 	;;
 esac
 
