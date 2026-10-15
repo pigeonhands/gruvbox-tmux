@@ -1,6 +1,6 @@
 # Gruvbox Tmux
 
-Forked from [https://gitlab.com/motaz-shokry/gruvbox-tmux](motaz-shokry/gruvbox-tmux)
+Forked from [motaz-shokry/gruvbox-tmux](https://gitlab.com/motaz-shokry/gruvbox-tmux) to add a more flexible api
 
 
 ![Overview](screenshots/overview.png)

@@ -4,8 +4,8 @@ CURRENT_DIR="$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)"
 SCRIPTS_PATH="$CURRENT_DIR/src"
 
 source "$SCRIPTS_PATH/themes.sh" || {
-    echo "Error: Failed to source themes.sh" >&2
-    exit 1
+	echo "Error: Failed to source themes.sh" >&2
+	exit 1
 }
 
 tmux set -g status-left-length 80
@@ -42,23 +42,19 @@ tmux set -g status-left "\
 #[bold,nodim]#S "
 
 tmux set -g window-status-current-format "\
-$RESET\
-#[fg=${THEME[bgreen]},bg=${THEME[bblack]}] \
+$RESET#[fg=${THEME[bgreen]},bg=${THEME[bblack]}] \
 #{?#{==:#{pane_current_command},ssh},󰣀 ,$active_terminal_icon }\
 #[fg=${THEME[bpurple]},bold,nodim]\
-$window_number\
-#W\
+$window_number#W\
 #[nobold]\
 #{?window_zoomed_flag, $zoom_number, $custom_pane}\
 #{?window_last_flag, ,}"
 
 tmux set -g window-status-format "\
-$RESET\
-#[fg=${THEME[foreground]}] \
+$RESET#[fg=${THEME[foreground]}] \
 #{?#{==:#{pane_current_command},ssh},󰣀 ,$terminal_icon }\
 ${RESET}\
-$window_number\
-#W\
+$window_number#W\
 #[nobold,dim]\
 #{?window_zoomed_flag, $zoom_number, $custom_pane}\
 #[fg=${THEME[yellow]}]\
@@ -68,28 +64,24 @@ $window_number\
 # to an empty string to disable that component. Use #{E:...} to expand a
 # component in a status format, just like Catppuccin's status modules.
 set_default_status_component() {
-    local option="$1"
-    local value="$2"
+	local option="$1"
+	local value="$2"
 
-    if ! tmux show-option -gq "$option" >/dev/null 2>&1; then
-        tmux set-option -g "$option" "$value"
-    fi
+	tmux set-option -og "$option" "$value"
 }
 
 set_default_status_component @gruvbox-tmux_status_git \
-    "#[fg=${THEME[ghgreen]},bg=${THEME[black]}]$git_status"
+	"#[fg=${THEME[ghgreen]},bg=${THEME[black]}]$git_status"
 set_default_status_component @gruvbox-tmux_status_wb_git \
-    "#[fg=${THEME[ghpurple]},bg=${THEME[black]}]$wb_git_status"
+	"#[fg=${THEME[ghpurple]},bg=${THEME[black]}]$wb_git_status"
 set_default_status_component @gruvbox-tmux_status_battery \
-    "#[fg=${THEME[ghred]},bg=${THEME[black]}]$battery_status"
+	"#[fg=${THEME[ghred]},bg=${THEME[black]}]$battery_status"
 set_default_status_component @gruvbox-tmux_status_datetime \
-    "#[fg=${THEME[ghyellow]},bg=${THEME[black]}]$date_and_time"
+	"#[fg=${THEME[ghyellow]},bg=${THEME[black]}]$date_and_time"
 
 # Preserve a user-defined composition. Otherwise, use the theme's default.
 default_right_status='#{E:@gruvbox-tmux_status_git}#{E:@gruvbox-tmux_status_wb_git}#{E:@gruvbox-tmux_status_battery}#{E:@gruvbox-tmux_status_datetime}'
-if ! tmux show-option -gq @gruvbox-tmux_status_right >/dev/null 2>&1; then
-    tmux set-option -g @gruvbox-tmux_status_right "$default_right_status"
-fi
+tmux set-option -og @gruvbox-tmux_status_right "$default_right_status"
 
 # Users can set @gruvbox-tmux_status_right before loading the plugin to
 # compose/reorder modules. The theme expands that option into status-right.
