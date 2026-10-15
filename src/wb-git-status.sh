@@ -1,4 +1,5 @@
 #!/usr/bin/env bash
+# Pulls github or gitlab status
 SHOW_WIDGET=$(tmux show-option -gv @gruvbox-tmux_show_wbg)
 if [ "$SHOW_WIDGET" == "0" ]; then
 	exit 0

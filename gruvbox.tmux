@@ -35,6 +35,7 @@ custom_pane="#($SCRIPTS_PATH/custom-number.sh #P $pane_id_style)"
 zoom_number="#($SCRIPTS_PATH/custom-number.sh #P $zoom_id_style)"
 date_and_time="$($SCRIPTS_PATH/datetime-widget.sh)"
 battery_status="#($SCRIPTS_PATH/battery-widget.sh)"
+ssh_connection_status="#($SCRIPTS_PATH/ssh-connection.sh #{pane_tty})"
 
 tmux set -g status-left "\
 #[fg=${THEME[foreground]},bg=${THEME[blue]},bold] \
@@ -78,9 +79,30 @@ set_default_status_component @gruvbox-tmux_status_battery \
 	"#[fg=${THEME[ghred]},bg=${THEME[black]}]$battery_status"
 set_default_status_component @gruvbox-tmux_status_datetime \
 	"#[fg=${THEME[ghyellow]},bg=${THEME[black]}]$date_and_time"
+set_default_status_component @gruvbox-tmux_status_ssh \
+	"#[fg=${THEME[ghcyan]},bg=${THEME[black]}]$ssh_connection_status"
 
-# Preserve a user-defined composition. Otherwise, use the theme's default.
-default_right_status='#{E:@gruvbox-tmux_status_git}#{E:@gruvbox-tmux_status_wb_git}#{E:@gruvbox-tmux_status_battery}#{E:@gruvbox-tmux_status_datetime}'
+# 1. Define your lookup dictionary
+declare -A RIGHT_ITEM_TYPES=(
+	[git]="@gruvbox-tmux_status_git"
+	[wb_git]="@gruvbox-tmux_status_wb_git"
+	[battery]="@gruvbox-tmux_status_battery"
+	[datetime]="@gruvbox-tmux_status_datetime"
+	[ssh]="@gruvbox-tmux_status_datetime"
+)
+
+DEFAULT_ITEMS="ssh git datetime"
+tmux set-option -og @gruvbox-tmux_status_right_items "$DEFAULT_ITEMS"
+
+# 3. Build the right status string dynamically
+default_right_status=""
+for key in $(tmux show-option -gv @gruvbox-tmux_status_right_items); do
+	# Check if the key exists in the dictionary to avoid errors
+	if [[ -n "${RIGHT_ITEM_TYPES[$key]}" ]]; then
+		default_right_status="${default_right_status}#{E:${RIGHT_ITEM_TYPES[$key]}}"
+	fi
+done
+
 tmux set-option -og @gruvbox-tmux_status_right "$default_right_status"
 
 # Users can set @gruvbox-tmux_status_right before loading the plugin to

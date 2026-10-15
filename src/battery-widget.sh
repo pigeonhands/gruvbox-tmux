@@ -1,15 +1,15 @@
 #!/usr/bin/env bash
 
+SHOW_BATTERY_WIDGET=$(tmux show-option -gv @gruvbox-tmux_show_battery_widget 2>/dev/null)
+if [[ "${SHOW_BATTERY_WIDGET}" != 1 ]]; then
+	exit 0
+fi
+
 ROOT_DIR="$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)/.."
 . "${ROOT_DIR}/src/themes.sh" || {
 	echo "Error: Failed to source themes.sh" >&2
 	exit 1
 }
-
-SHOW_BATTERY_WIDGET=$(tmux show-option -gv @gruvbox-tmux_show_battery_widget 2>/dev/null)
-if [[ "${SHOW_BATTERY_WIDGET}" != 1 ]]; then
-	exit 0
-fi
 
 BATTERY_NAME=$(tmux show-option -gv @gruvbox-tmux_battery_name 2>/dev/null)
 BATTERY_LOW=$(tmux show-option -gv @gruvbox-tmux_battery_low_threshold 2>/dev/null)

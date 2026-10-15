@@ -104,5 +104,6 @@ THEME['ghgreen']="#b8bb26"
 THEME['ghpurple']="#d3869b"
 THEME['ghred']="#fb4934"
 THEME['ghyellow']="#fabd2f"
+THEME['ghcyan']="#25baa3"
 
 RESET="#[fg=${THEME[foreground]},bg=${THEME[background]},nobold,noitalics,nounderscore,nodim]"

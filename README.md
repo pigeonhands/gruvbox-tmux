@@ -58,6 +58,14 @@ set -g @gruvbox-tmux_zoom_id_style dsquare    # hsquare | fsquare | sub | super 
 
 For widgets add following lines in you `.tmux.conf`
 
+#### Default widgets
+
+Set the layout of the default widgets
+```bash
+tmux set-option -og @gruvbox-tmux_status_right_items " ssh git wb_git battery datetime"
+```
+Defaults to `ssh git datetime`
+
 #### Time widget
 
 This widget is enabled by default. To disable it:
@@ -74,6 +82,28 @@ set -g @gruvbox-tmux_time_format 12H
 ##### Available Options
 - `24H`: 18:30
 - `12H`: 6:30 PM
+
+
+
+#### SSH Widget
+
+This widget is enabled by default. To disable it:
+
+```bash
+set -g @gruvbox-tmux_show_ssh_connection 0
+```
+
+SSH options
+
+```bash
+set -g @tmux_show_ssh_connection "server" # show connected address when tmux is running on remote machine over ssh
+set -g @tmux_show_ssh_connection "client" # show ssh cmd when ssh is running in tmux
+set -g @tmux_show_ssh_connection "both" # both client and server
+
+set -g @gruvbox-tmux_ssh_use_nerdfont 1     # use default nerdfont connection icon, otherwise unicode icon
+set -g @gruvbox-gruvbox-tmux_ssh_icon "->"  # set connection icon
+```
+
 
 #### Battery Widget
 
