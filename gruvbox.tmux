@@ -64,12 +64,35 @@ $window_number\
 #[fg=${THEME[yellow]}]\
 #{?window_last_flag, ,}"
 
-right_status="\
-#[fg=${THEME[ghgreen]},bg=${THEME[black]}]$git_status\
-#[fg=${THEME[ghpurple]},bg=${THEME[black]}]$wb_git_status\
-#[fg=${THEME[ghred]},bg=${THEME[black]}]$battery_status\
-#[fg=${THEME[ghyellow]},bg=${THEME[black]}]$date_and_time"
+# Public status components. Each option can be overridden in tmux.conf, or set
+# to an empty string to disable that component. Use #{E:...} to expand a
+# component in a status format, just like Catppuccin's status modules.
+set_default_status_component() {
+    local option="$1"
+    local value="$2"
 
-tmux set -g status-right "$right_status"
+    if ! tmux show-option -gq "$option" >/dev/null 2>&1; then
+        tmux set-option -g "$option" "$value"
+    fi
+}
+
+set_default_status_component @gruvbox-tmux_status_git \
+    "#[fg=${THEME[ghgreen]},bg=${THEME[black]}]$git_status"
+set_default_status_component @gruvbox-tmux_status_wb_git \
+    "#[fg=${THEME[ghpurple]},bg=${THEME[black]}]$wb_git_status"
+set_default_status_component @gruvbox-tmux_status_battery \
+    "#[fg=${THEME[ghred]},bg=${THEME[black]}]$battery_status"
+set_default_status_component @gruvbox-tmux_status_datetime \
+    "#[fg=${THEME[ghyellow]},bg=${THEME[black]}]$date_and_time"
+
+# Preserve a user-defined composition. Otherwise, use the theme's default.
+default_right_status='#{E:@gruvbox-tmux_status_git}#{E:@gruvbox-tmux_status_wb_git}#{E:@gruvbox-tmux_status_battery}#{E:@gruvbox-tmux_status_datetime}'
+if ! tmux show-option -gq @gruvbox-tmux_status_right >/dev/null 2>&1; then
+    tmux set-option -g @gruvbox-tmux_status_right "$default_right_status"
+fi
+
+# Users can set @gruvbox-tmux_status_right before loading the plugin to
+# compose/reorder modules. The theme expands that option into status-right.
+tmux set -g status-right '#{E:@gruvbox-tmux_status_right}'
 
 tmux set -g window-status-separator ""

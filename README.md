@@ -1,5 +1,8 @@
 # Gruvbox Tmux
 
+Forked from [https://gitlab.com/motaz-shokry/gruvbox-tmux](motaz-shokry/gruvbox-tmux)
+
+
 ![Overview](screenshots/overview.png)
 
 A clean  Tmux theme that  follow the [gruvbox](https://github.com/morhetz/gruvbox) colors, Inspired by [Tokyo Night Tmux](https://github.com/janoamaral/tokyo-night-tmux).
@@ -80,6 +83,36 @@ set -g @gruvbox-tmux_battery_name "BAT0"       # run `ls /sys/class/power_supply
 set -g @gruvbox-tmux_battery_low_threshold 25 
 ```
 
+
+### Custom status components
+
+The right side of the status bar is composed from named, overridable options.
+Use `#{E:@gruvbox-tmux_status_<name>}` to include a component in a status
+format. The built-in components are:
+
+- `@gruvbox-tmux_status_git`
+- `@gruvbox-tmux_status_wb_git`
+- `@gruvbox-tmux_status_battery`
+- `@gruvbox-tmux_status_datetime`
+
+Override a component or set it to an empty string to disable it. You can also
+compose and reorder the right side with `@gruvbox-tmux_status_right` before TPM
+loads the plugin:
+
+```tmux
+set -g @gruvbox-tmux_status_right '#{E:@gruvbox-tmux_status_git}#{E:@gruvbox-tmux_status_datetime}'
+```
+
+To add your own segments, define a tmux option and expand it in the composition.
+For example, a custom segment can be included alongside the built-in modules:
+
+```tmux
+set -g @my_status_segment '#[fg=colour7] my segment '
+set -g @gruvbox-tmux_status_right '#{E:@gruvbox-tmux_status_git}#{E:@my_status_segment}#{E:@gruvbox-tmux_status_datetime}'
+```
+
+The theme only supplies the default composition when `@gruvbox-tmux_status_right`
+has not already been set, so custom compositions can be configured before TPM.
 
 ### Snapshots
 
