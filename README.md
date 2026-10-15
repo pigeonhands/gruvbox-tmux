@@ -4,6 +4,9 @@ Forked from [motaz-shokry/gruvbox-tmux](https://gitlab.com/motaz-shokry/gruvbox-
 
 
 ![Overview](screenshots/overview.png)
+![Git Repo](screenshots/preview-git.png)
+![SSH Server](screenshots/preview-ssh-server.png)
+![SSH Client](screenshots/preview-ssh-client.png)
 
 A clean  Tmux theme that  follow the [gruvbox](https://github.com/morhetz/gruvbox) colors, Inspired by [Tokyo Night Tmux](https://github.com/janoamaral/tokyo-night-tmux).
 
@@ -24,12 +27,21 @@ The following are recommended for full support of all widgets and features:
 In your `tmux.conf` add :
 
 ```bash
-set -g @plugin "https://gitlab.com/motaz-shokry/gruvbox-tmux"
+set -g @plugin "https://github.com/pigeonhands/gruvbox-tmux"
 ```
 
 ## Configuration
 
 Add these lines to your  `.tmux.conf`:
+
+### Rendered widgets
+
+Set the widgets to include on the right panel. Adding/Removing widgets here will likely need the tmux server to apply.
+
+```bash
+tmux set-option -og @gruvbox-tmux_status_right_items "ssh git wb_git battery datetime"
+```
+Defaults to `ssh git datetime`
 
 ### Theme Flavor
 
@@ -58,13 +70,6 @@ set -g @gruvbox-tmux_zoom_id_style dsquare    # hsquare | fsquare | sub | super 
 
 For widgets add following lines in you `.tmux.conf`
 
-#### Default widgets
-
-Set the layout of the default widgets
-```bash
-tmux set-option -og @gruvbox-tmux_status_right_items " ssh git wb_git battery datetime"
-```
-Defaults to `ssh git datetime`
 
 #### Time widget
 
@@ -99,6 +104,7 @@ SSH options
 set -g @tmux_show_ssh_connection "server" # show connected address when tmux is running on remote machine over ssh
 set -g @tmux_show_ssh_connection "client" # show ssh cmd when ssh is running in tmux
 set -g @tmux_show_ssh_connection "both" # both client and server
+set -g @tmux_show_ssh_connection 0 # off
 
 set -g @gruvbox-tmux_ssh_use_nerdfont 1     # use default nerdfont connection icon, otherwise unicode icon
 set -g @gruvbox-gruvbox-tmux_ssh_icon "->"  # set connection icon
